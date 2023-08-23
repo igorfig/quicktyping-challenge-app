@@ -16,6 +16,16 @@ export const Container = styled.header`
 		overflow-y: hidden;
 	}
 
+	button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	    font-size: 1.6rem;
+	    background: transparent;
+	    border: none;
+	    outline: none;
+	}
+
 	span {
 		color: #CE2128;
 	}

@@ -18,7 +18,7 @@ export default function Header({ setCurrentTheme }) {
 	return(
 		<Container>
 			<h1>QuickType <span>Challenge</span></h1>
-			<button onClick={handleToggleTheme}>Tema</button>
+			<button onClick={handleToggleTheme}>{theme === 'dark' ? '🌞' : '🌚'}</button>
 			<p>
 				Domine a arte da digitação rápida e precisa com o <span>QuickType Challenge</span>, 
 				a sua ferramenta de treinamento de digitação definitiva. 
