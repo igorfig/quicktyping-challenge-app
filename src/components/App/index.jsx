@@ -1,30 +1,22 @@
 import { useState } from 'react';
-
-import { Container } from './styles';
 import { ThemeProvider } from 'styled-components';
-import { ThemeContextProvider } from '../../contexts/ThemeContext';
+import { Container } from './styles';
 
 import themes from '../../styles/themes';
 
-import Header from '../Header';
-import Main from '../Main';
+import GlobalStyles from '../../styles/global';
+import AppRoutes from '../../routes';
 
 export default function App() {
 	const [currentTheme, setCurrentTheme] = useState(themes.dark);
 
-   const handleSetCurrentTheme = (theme) => setCurrentTheme(theme);
-
-   console.log(currentTheme);
-
+   	const handleSetCurrentTheme = (theme) => setCurrentTheme(theme);
 	return (
 		<ThemeProvider theme={currentTheme}>
-			<ThemeContextProvider>
-				<Container>
-					<Header setCurrentTheme={handleSetCurrentTheme}/>
-				<Main />
+			<Container>
+				<GlobalStyles />
+				<AppRoutes setCurrentTheme={handleSetCurrentTheme}/>
 			</Container>
-		</ThemeContextProvider>
-			
 		</ThemeProvider>
 		
 	)
