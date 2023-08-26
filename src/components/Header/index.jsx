@@ -1,17 +1,19 @@
 import { useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container } from './styles';
 import { useTheme } from '../../hooks/useTheme';
 import themes from '../../styles/themes';
 
 export default function Header({ setCurrentTheme }) {
 	const { theme, handleToggleTheme } = useTheme(); 
+	const location = useLocation();
 
 	const currentTheme = useMemo(() => {
 		return themes[theme];
 	}, [theme])
 
 	useEffect(() => {
-		setCurrentTheme(currentTheme)
+		setCurrentTheme(currentTheme);
 	}, [currentTheme]);
 
 	console.log(currentTheme);
@@ -19,13 +21,12 @@ export default function Header({ setCurrentTheme }) {
 		<Container>
 			<h1>QuickType <span>Challenge</span></h1>
 			<button onClick={handleToggleTheme}>{theme === 'dark' ? '🌞' : '🌚'}</button>
-			<p>
+			{location.pathname !== '/jogo' && (<p>
 				Domine a arte da digitação rápida e precisa com o <span>QuickType Challenge</span>, 
 				a sua ferramenta de treinamento de digitação definitiva. 
 				Seja você um iniciante buscando aprimorar suas habilidades ou um digitador experiente em busca de desafios.
-			</p>
+			</p>)}
 
 		</Container>
-		
 	)
 }
