@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Container } from './styles';
+import { Container, HomepageLink } from './styles';
 import { useTheme } from '../../hooks/useTheme';
 import themes from '../../styles/themes';
 
@@ -16,9 +16,15 @@ export default function Header({ setCurrentTheme }) {
 		setCurrentTheme(currentTheme);
 	}, [currentTheme]);
 
-	console.log(currentTheme);
+	console.log(location.pathname);
+
 	return(
 		<Container>
+			{ location.pathname === '/jogo' && (
+				<HomepageLink to="/" >
+					<img src={themes[theme].arrow} alt="Homepage" />
+				</HomepageLink>
+			) }
 			<h1>QuickType <span>Challenge</span></h1>
 			<button onClick={handleToggleTheme}>{theme === 'dark' ? '🌞' : '🌚'}</button>
 			{location.pathname !== '/jogo' && (<p>
