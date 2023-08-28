@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
 	max-width: 100%;
@@ -35,6 +36,19 @@ export const Container = styled.header`
 		font-size: 1.4rem;
 		align-self: flex-start;
 		text-align: justify;
+	}
+
+`
+
+export const HomepageLink = styled(Link)`
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	width: 48px;
+	padding: 0;
+	
+	img {
+		width: 48px;
 	}
 
 `
