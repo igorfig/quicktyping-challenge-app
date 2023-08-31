@@ -25,10 +25,10 @@ export default function Header({ setCurrentTheme }) {
 					<img src={themes[theme].arrow} alt="Homepage" />
 				</HomepageLink>
 			) }
-			<h1>QuickType <span>Challenge</span></h1>
+			<h1>QuickTyping <span>Challenge</span></h1>
 			<button onClick={handleToggleTheme}>{theme === 'dark' ? '🌞' : '🌚'}</button>
 			{location.pathname !== '/jogo' && (<p>
-				Domine a arte da digitação rápida e precisa com o <span>QuickType Challenge</span>, 
+				Domine a arte da digitação rápida e precisa com o <span>QuickTyping Challenge</span>, 
 				a sua ferramenta de treinamento de digitação definitiva. 
 				Seja você um iniciante buscando aprimorar suas habilidades ou um digitador experiente em busca de desafios.
 			</p>)}
