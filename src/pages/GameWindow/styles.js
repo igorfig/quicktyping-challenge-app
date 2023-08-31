@@ -39,4 +39,6 @@ export const StyledContentEditble = styled(ContentEditable)`
 	text-decoration: underline;
 	font-size: 1.2rem;
 	padding: 1rem;
+
+	color: ${({ error, theme }) => error && theme.error};
 `
