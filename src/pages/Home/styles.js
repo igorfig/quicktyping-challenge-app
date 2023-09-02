@@ -82,7 +82,7 @@ export const Button = styled(Link)`
 	padding: .6rem;
 	text-align: center;
 	border-radius: .25rem;
-	background: #CE2128;
+	background: #F15152;
 	color: #fff;
 	font-size: 1.2rem;
 	font-weight: 700;
