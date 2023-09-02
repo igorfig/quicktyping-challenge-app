@@ -28,7 +28,7 @@ export const Container = styled.header`
 	}
 
 	span {
-		color: #CE2128;
+		color: #F15152;
 	}
 
 	p {
