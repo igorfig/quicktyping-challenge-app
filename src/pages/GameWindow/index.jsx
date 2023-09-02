@@ -1,25 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container, PhraseContainer, TypeContainer, StyledContentEditble } from './styles';
 
 export default function GameWindow() {
-	const [text, setText] = useState('Digite aqui!');
-	const [phrase, setPhrase] = useState('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis provident eveniet, quod laborum, aut officia architecto veniam, quisquam dignissimos esse earum quae officiis quis explicabo? Illum labore, esse a consequuntur!');
+	const defaultPhrase = 'Digite Aqui';
+	const [text, setText] = useState(defaultPhrase);
+	const [phrase, setPhrase] = useState('Lorem');
 	const [hasTypoError, setHasTypoError] = useState(false);
 
+	const verifyTyping = (typing) => phrase.charAt(typing?.length - 1) !== typing.charAt(typing?.length - 1);
+
 	const handleChange = (event) => {
-		setText(event.target.value);
+		console.log(event.target.value.length);
+		console.log(phrase);
+		if(event.target.value.length <= phrase.length) {
+			setText(event.target.value)
+		};
 		
-		if(phrase.charAt(event.target.value.length - 1) !== event.target.value.charAt(event.target.value.length - 1)) {
+		if(verifyTyping(event.target.value)) {
 			setHasTypoError(true);
 		} else{
 			setHasTypoError(false);
 		};
 	};
 
-	const handleFocus = (event) => setText("");
+	const handleFocus = (event) => {
+		if(event.target.innerText === defaultPhrase){
+			setText('');
+		};
+	};
 	const handleBlur = (event) => {
-		!event.target.value && setText('Digite Aqui!')
-		hasTypoError && setHasTypoError(false);
+		event.target.innerText?.length === 0 && setText('Digite Aqui!')
 	};
 
 	return (
@@ -41,7 +51,7 @@ export default function GameWindow() {
 					onChange={handleChange}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
-					error={hasTypoError}
+					error={hasTypoError ? 1 : 0} // Truthy or Falsy
 				/>
 			</TypeContainer>
 		</Container>
