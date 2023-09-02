@@ -4,5 +4,5 @@ export default {
 	backgroundColor: '#EBEBD3',
 	textColor: '#222',
 	arrow,
-	error: '#CE2128'
+	error: '#F15152'
 }
