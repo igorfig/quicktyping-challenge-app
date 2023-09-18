@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container, PhraseContainer, TypeContainer, StyledContentEditble } from './styles';
 
 export default function GameWindow() {
-	const defaultPhrase = 'Digite Aqui';
+	const defaultPhrase = 'Digite Aqui!';
 	const [text, setText] = useState(defaultPhrase);
 	const [phrase, setPhrase] = useState('Lorem');
 	const [hasTypoError, setHasTypoError] = useState(false);
@@ -10,11 +10,7 @@ export default function GameWindow() {
 	const verifyTyping = (typing) => phrase.charAt(typing?.length - 1) !== typing.charAt(typing?.length - 1);
 
 	const handleChange = (event) => {
-		console.log(event.target.value.length);
-		console.log(phrase);
-		if(event.target.value.length <= phrase.length) {
-			setText(event.target.value)
-		};
+		setText(event.target.value);
 		
 		if(verifyTyping(event.target.value)) {
 			setHasTypoError(true);
