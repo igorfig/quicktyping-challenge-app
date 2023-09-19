@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Container } from './styles';
+import { Container, Title, Time, ToggleButton } from './styles';
+import timerArrowImg from '../../assets/images/icons/timerArrow.svg';
 
 export default function Timer({ difficulty }) {
 	const timerPerDifficulty = {
@@ -38,10 +39,15 @@ export default function Timer({ difficulty }) {
 
 	return (
 		<Container>
+			<Title>
+				⏰ Cronômetro
+			</Title>
 			
-			{minutes.toString().padStart(2, "0")} : {seconds.toString().padStart(2, "0")}	
+			<Time> {minutes.toString().padStart(2, "0")} : {seconds.toString().padStart(2, "0")}</Time>
 
-			<button onClick={() => setStart(prevState => totalSecondsAmount > 0 && !prevState)}>Iniciar / Pausar</button>
+			<ToggleButton>
+				<img src={timerArrowImg} alt="Fechar/Abrir" />
+			</ToggleButton>
 		</Container>
 	)
 }
