@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Container, PhraseContainer, TypeContainer, StyledContentEditble } from './styles';
+import Timer from '../../components/Timer';
 
 export default function GameWindow() {
 	const defaultPhrase = 'Digite Aqui!';
@@ -40,6 +41,10 @@ export default function GameWindow() {
 				<span>Autor: ...</span>
 				<p>{phrase}</p>
 			</PhraseContainer>
+
+			<Timer 
+				difficulty={"normal"}
+			/>
 
 			<TypeContainer>
 				<StyledContentEditble
