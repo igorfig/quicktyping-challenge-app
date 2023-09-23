@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Container, Title, Time, ToggleButton } from './styles';
-import timerArrowImg from '../../assets/images/icons/timerArrow.svg';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { Container, Title, Time, ToggleButton, ToggleArrow, ClockButton } from './styles';
+import { useTheme } from '../../hooks/useTheme';
+import themes from '../../styles/themes';
 
 export default function Timer({ difficulty }) {
 	const timerPerDifficulty = {
@@ -9,10 +10,21 @@ export default function Timer({ difficulty }) {
 		hard: 60 // 1 minutes in seconds
 	}
 
+	
+	const [isTimeHide, setIsTimeHide] = useState(true);
 	const [minutes, setMinutes] = useState((timerPerDifficulty[difficulty] / 60) < 1 ? 0 : timerPerDifficulty[difficulty] / 60);
 	const [seconds,setSeconds] = useState(timerPerDifficulty[difficulty] < 60 ? timerPerDifficulty[difficulty] : 0 );
 	const [totalSecondsAmount, setTotalSecondsAmount] = useState(timerPerDifficulty[difficulty]);
 	const [start, setStart] = useState(false);
+  	const didMountRef = useRef(false);
+
+  	const { theme } = useTheme();
+
+  	useLayoutEffect(() => {
+	    if (!didMountRef.current) {
+	     	didMountRef.current = true;
+	    }
+  	}, [isTimeHide]);
 
 	useEffect(() => {
 		if(totalSecondsAmount === 0) {
@@ -38,16 +50,24 @@ export default function Timer({ difficulty }) {
 	})
 
 	return (
-		<Container>
-			<Title>
-				⏰ Cronômetro
-			</Title>
-			
-			<Time> {minutes.toString().padStart(2, "0")} : {seconds.toString().padStart(2, "0")}</Time>
+		<>
+			{didMountRef.current && (
+				<Container className={isTimeHide ? 'hide' : 'active'}>
+					<Title>
+						⏰ Cronômetro
+					</Title>
+					
+					<Time> {minutes.toString().padStart(2, "0")} : {seconds.toString().padStart(2, "0")}</Time>
 
-			<ToggleButton>
-				<img src={timerArrowImg} alt="Fechar/Abrir" />
-			</ToggleButton>
-		</Container>
+					<ToggleButton onClick={() => setIsTimeHide(true)}>
+						<ToggleArrow src={themes[theme].timerArrow} alt="Fechar/Abrir" transform={true} />
+					</ToggleButton>
+				</Container>
+			)}
+
+			{isTimeHide && <ClockButton onClick={() => setIsTimeHide(false)}>
+				<ToggleArrow src={themes[theme].timerArrow} alt="" />
+			</ClockButton>}
+		</>
 	)
 }
