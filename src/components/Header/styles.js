@@ -9,7 +9,7 @@ export const Container = styled.header`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid ${({theme}) => theme.textColor};
 
 	h1 {
 		font-size: 5.2rem;
