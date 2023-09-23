@@ -22,7 +22,7 @@ export default function Header({ setCurrentTheme }) {
 		<Container>
 			{ location.pathname === '/jogo' && (
 				<HomepageLink to="/" >
-					<img src={themes[theme].arrow} alt="Homepage" />
+					<img src={themes[theme].backArrow} alt="Homepage" />
 				</HomepageLink>
 			) }
 			<h1>QuickTyping <span>Challenge</span></h1>
