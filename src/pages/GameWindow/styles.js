@@ -3,7 +3,7 @@ import ContentEditable from 'react-contenteditable'
 
 export const Container = styled.div`
 	margin-top: 3rem;
-	max-width: 800px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -29,16 +29,4 @@ export const PhraseContainer = styled.div`
 		font-size: 1.2rem;
 	}
 
-`
-
-export const TypeContainer = styled.div`
-	
-`
-
-export const StyledContentEditble = styled(ContentEditable)`
-	text-decoration: underline;
-	font-size: 1.2rem;
-	padding: 1rem;
-
-	color: ${({ error, theme }) => error && theme.error};
 `

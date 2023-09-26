@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Container, PhraseContainer, TypeContainer, StyledContentEditble } from './styles';
+import { Container } from './styles';
+
 import Timer from '../../components/Timer';
+import Typing from '../../components/TypingContainer';
 
 export default function GameWindow() {
 	const defaultPhrase = 'Digite Aqui!';
@@ -31,30 +33,17 @@ export default function GameWindow() {
 
 	return (
 		<Container>
-			<h2>
+			{/*<h2>
 				🌿Treinamento Livre
 			</h2>
 
-			<h3>Nível de dificuldade: Normal</h3>
-
-			<PhraseContainer>
-				<span>Autor: ...</span>
-				<p>{phrase}</p>
-			</PhraseContainer>
+			<h3>Nível de dificuldade: Normal</h3>*/}
 
 			<Timer 
 				difficulty={"normal"}
 			/>
 
-			<TypeContainer>
-				<StyledContentEditble
-					html={text}
-					onChange={handleChange}
-					onFocus={handleFocus}
-					onBlur={handleBlur}
-					error={hasTypoError ? 1 : 0} // Truthy or Falsy
-				/>
-			</TypeContainer>
+			<Typing />
 		</Container>
 	)
 }
