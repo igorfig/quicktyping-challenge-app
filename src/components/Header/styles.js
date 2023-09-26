@@ -13,6 +13,9 @@ export const Container = styled.header`
 
 	h1 {
 		font-size: 5.2rem;
+		@media(max-width: 480px) {
+			font-size: 3rem;
+		}
 		margin-bottom: 3rem;
 		overflow-y: hidden;
 	}

@@ -12,6 +12,11 @@ export const Container = styled.main`
 
 	h2 {
 		font-size: 2rem;
+
+		@media(max-width: 480px) {
+			font-size: 1.2rem;
+		}
+
 		font-weight: bold;
 		align-self: center;
 	}
@@ -31,6 +36,10 @@ export const Container = styled.main`
 
 	p {
 		margin-top: 1rem;
+
+		@media(max-width: 480px) {
+			font-size: .95rem;
+		}
 
 	}
 
