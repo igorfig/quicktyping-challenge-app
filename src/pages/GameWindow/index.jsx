@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container } from './styles';
 
 import Timer from '../../components/Timer';
-import Typing from '../../components/TypingContainer';
+import Typing from '../../components/Typing';
 
 export default function GameWindow() {
 	const defaultPhrase = 'Digite Aqui!';
