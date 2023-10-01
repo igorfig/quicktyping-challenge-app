@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { 
 	Container,
@@ -53,7 +53,6 @@ export default function Typing() {
 	const [phrase, setPhrase] = useState('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eligendi accusantium, adipisci fugit eos provident aliquid excepturi quos fugiat itaque voluptates voluptate eaque, culpa harum sit incidunt sapiente pariatur recusandae.');
 	const [hasTypo, setHasTypo] = useState(false);
 	const [typosDetails, setTyposDetails] = useState([])
-	// const verifyTyping = (typing) => phrase.charAt(typing?.length - 1) !== typing.charAt(typing?.length - 1);
 
 	const handleChange = useCallback((event) => {
 		const typingSplitted = event.target.value.split('');
@@ -84,6 +83,13 @@ export default function Typing() {
 
 		setTyposDetails(typosFixed);
 	}, [typing, phrase]);
+
+	// Typing Average 
+	const typingAccuracy = useMemo(() => {
+		return (typing.length - typosDetails.length) * 100 / typing.length || 0;
+	}, [typosDetails, typing])
+	
+
 
 	return (
 		<Container>
@@ -127,7 +133,7 @@ export default function Typing() {
 						<img src={accuracyImg} alt="Precisão de acertos" />
 					</ImageContainer>
 					<div>
-						<span>100%</span>
+						<span>{typingAccuracy.toFixed(1)} %</span>
 						<small>Acertos</small>
 					</div>
 				</Average>
