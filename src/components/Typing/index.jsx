@@ -19,8 +19,6 @@ import clockImg from '../../assets/images/icons/clock.svg';
 export default function Typing() {
 
 	/* TIMER STATES */
-	const [minutes, setMinutes] = useState(120 / 60);
-	const [seconds,setSeconds] = useState(0);
 	const [totalSecondsAmount, setTotalSecondsAmount] = useState(120);
 	const [start, setStart] = useState(false);
 
@@ -33,19 +31,12 @@ export default function Typing() {
 	useEffect(() => {
 		if(start) {
 			const interval = setInterval(() => {
-				setTotalSecondsAmount(prevState => prevState - 1);
-
-				setSeconds(prevState => prevState > 0 ? prevState - 1 : 59);
-
-				if(seconds === 0 && minutes > 0) {
-					setMinutes(prevState => prevState - 1);
-				}
-
-				}, 1000);
+				setTotalSecondsAmount(prevState => prevState - 1);	
+			}, 1000);
 
 			return () => clearInterval(interval);
 		}
-	})
+	}, [start])
 
 	/* TYPING STATES*/
 
@@ -53,6 +44,7 @@ export default function Typing() {
 	const [phrase, setPhrase] = useState('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eligendi accusantium, adipisci fugit eos provident aliquid excepturi quos fugiat itaque voluptates voluptate eaque, culpa harum sit incidunt sapiente pariatur recusandae.');
 	const [hasTypo, setHasTypo] = useState(false);
 	const [typosDetails, setTyposDetails] = useState([])
+	const [lettersTyped, setLettersTyped] = useState(0);
 
 	const handleChange = useCallback((event) => {
 		const typingSplitted = event.target.value.split('');
@@ -89,6 +81,17 @@ export default function Typing() {
 		return (typing.length - typosDetails.length) * 100 / typing.length || 0;
 	}, [typosDetails, typing])
 	
+	useEffect(() => {
+		if(start) {
+			const letterTypedHandler = () => {
+				setLettersTyped(prevState => prevState + 1);
+			}
+
+			window.addEventListener('keypress', letterTypedHandler);
+
+			return () => window.removeEventListener('keypress', letterTypedHandler);
+		}
+	}, [start])
 
 
 	return (
@@ -113,7 +116,10 @@ export default function Typing() {
 								<img src={clockImg} alt="Cronômetro" />
 							</ImageContainer>
 							<div>
-								<span>{minutes.toString().padStart(2, "0")} : {seconds.toString().padStart(2, "0")}</span>
+								<span>
+									{Math.floor(totalSecondsAmount / 60).toString().padStart(2, "0")} 
+									: 
+									{(totalSecondsAmount % 60).toString().padStart(2, "0")}</span>
 								<small>Cronômetro</small>
 							</div>
 				</Average>
@@ -123,7 +129,7 @@ export default function Typing() {
 							<img src={charPerMinutesImg} alt="Caracteres por minuto" />
 						</ImageContainer>
 						<div>
-							<span>39</span>
+							<span>{Math.round((lettersTyped / (120 - totalSecondsAmount)) * 60) || 0}</span>
 							<small>caract/min</small>
 						</div>
 				</Average>
@@ -158,6 +164,8 @@ export default function Typing() {
 				onChange={handleChange}
 				value={typing}
 				placeholder="Aqui vai a frase..."/>
+
+			<button onClick={() => setStart(prevState => !prevState)}>START</button> {// TIMER HANDLER TEST}
 		</Container>
 	)
 }
