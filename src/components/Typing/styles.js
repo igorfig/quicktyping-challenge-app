@@ -107,6 +107,7 @@ export const Phrase = styled.p`
 	text-align: justify;
 	font-weight: 300;
 	font-size: 1.5rem;
+	line-height: 2rem;
 `
 
 export const TypingField = styled.textarea`
@@ -116,6 +117,7 @@ export const TypingField = styled.textarea`
 	padding: 1.5rem;
 	font-size: 1.2rem;
 	letter-spacing: .125rem;
+	line-height: 2rem;
 	width: 80%;
 	min-height: 200px;
 	max-height: 100%;
