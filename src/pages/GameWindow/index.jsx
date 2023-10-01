@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Container } from './styles';
 
-import Timer from '../../components/Timer';
 import Typing from '../../components/Typing';
 
 export default function GameWindow() {
@@ -33,16 +32,6 @@ export default function GameWindow() {
 
 	return (
 		<Container>
-			{/*<h2>
-				🌿Treinamento Livre
-			</h2>
-
-			<h3>Nível de dificuldade: Normal</h3>*/}
-
-			<Timer 
-				difficulty={"normal"}
-			/>
-
 			<Typing />
 		</Container>
 	)
