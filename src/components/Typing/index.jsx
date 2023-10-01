@@ -165,7 +165,7 @@ export default function Typing() {
 				value={typing}
 				placeholder="Aqui vai a frase..."/>
 
-			<button onClick={() => setStart(prevState => !prevState)}>START</button> {// TIMER HANDLER TEST}
+			<button onClick={() => setStart(prevState => !prevState)}>START</button> {/* TIMER HANDLER TEST */}
 		</Container>
 	)
 }
