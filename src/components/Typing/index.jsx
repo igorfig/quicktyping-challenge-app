@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { ThreeDots } from 'react-loader-spinner'
 
 import { 
 	Container,
@@ -17,7 +18,6 @@ import charPerMinutesImg from '../../assets/images/icons/charPerMinutes.svg';
 import clockImg from '../../assets/images/icons/clock.svg';
 
 export default function Typing() {
-
 	/* TIMER STATES */
 	const [totalSecondsAmount, setTotalSecondsAmount] = useState(120);
 	const [start, setStart] = useState(false);
@@ -41,10 +41,12 @@ export default function Typing() {
 	/* TYPING STATES*/
 
 	const [typing, setTyping] = useState('');
-	const [phrase, setPhrase] = useState('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eligendi accusantium, adipisci fugit eos provident aliquid excepturi quos fugiat itaque voluptates voluptate eaque, culpa harum sit incidunt sapiente pariatur recusandae.');
+	const [phrase, setPhrase] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus accusamus id obcaecati, magni in ipsum praesentium soluta neque nemo suscipit iusto rerum veniam fugit minus voluptate unde. Dolorum aliquid, sint!');
 	const [hasTypo, setHasTypo] = useState(false);
 	const [typosDetails, setTyposDetails] = useState([])
 	const [lettersTyped, setLettersTyped] = useState(0);
+
+	const typingInputRef = useRef(null);
 
 	const handleChange = useCallback((event) => {
 		const typingSplitted = event.target.value.split('');
@@ -93,6 +95,15 @@ export default function Typing() {
 		}
 	}, [start])
 
+
+	useEffect(() => {
+		if(start) {
+			if(typosDetails.length === 0 && typing.length === phrase.length){ 
+				setStart(false)
+				typingInputRef.current.disabled = true;
+			};
+		}
+	}, [typosDetails, typing, phrase])
 
 	return (
 		<Container>
@@ -143,7 +154,7 @@ export default function Typing() {
 						<small>Acertos</small>
 					</div>
 				</Average>
-
+		
 				<Average>
 					<ImageContainer>
 						<img src={typosMobImg} alt="Erros de digitação" />
@@ -155,17 +166,33 @@ export default function Typing() {
 				</Average>
 			</AverageContainer>
 
-			<Phrase>
-				{phrase}
-			</Phrase>
+			{phrase ? (
+				<>
+					<Phrase>
+						{phrase}
+					</Phrase>
 
-			<TypingField 
-				error={hasTypo ? 1 : 0}
-				onChange={handleChange}
-				value={typing}
-				placeholder="Aqui vai a frase..."/>
-
-			<button onClick={() => setStart(prevState => !prevState)}>START</button> {/* TIMER HANDLER TEST */}
+					<TypingField
+						ref={typingInputRef}
+						error={hasTypo ? 1 : 0}
+						onChange={handleChange}
+						value={typing}
+						onFocus={() => setStart(true)}
+						placeholder="CLIQUE PARA INICIAR..."/>
+				</>
+			) : (
+				<ThreeDots 
+					height="80" 
+					width="80" 
+					radius="9"
+					color="#ffffffde" 
+					ariaLabel="three-dots-loading"
+					wrapperStyle={{}}
+					wrapperClassName=""
+					visible={true}
+				 />
+			)}
+			
 		</Container>
 	)
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	width: 80%;
 	padding: 3rem;
-	background: #2C2E30;
+	background: ${({ theme }) => theme.bgSecondary};
 	border-radius: 1.25rem;
 	position: relative;
 	display: flex;
@@ -11,6 +11,24 @@ export const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 5rem;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	margin: 2rem 0;
+
+	
+
+	&  p {
+		animation: fade-in .5s 1 ease-in;
+		@keyframes fade-in {
+			from {
+				opacity: 0;
+				transform: translateX(-10%);
+			}
+			 to {
+			 	opacity: 1;
+			 }
+		}
+ 	}
+
 `
 
 export const Dots = styled.div`
@@ -55,7 +73,8 @@ export const Options = styled.div`
 		outline: none;
 		background: transparent;
 
-		color: #797C83;
+		color: ${({ theme }) => theme.textColor};
+		opacity: .4;
 	}
 `
 
@@ -81,11 +100,12 @@ export const Average = styled.div`
 		span {
 			font-weight: bold;
 			font-size: 1.6rem;
-			color: #fff;
+			color: ${({ theme }) => theme.textColor};
 		}
 
 		small {
-			color: #47484C;
+			color: ${({ theme }) => theme.textColor};
+			opacity: .4;
 			font-weight: bold;
 			font-size: .7rem;
 		}
@@ -93,11 +113,12 @@ export const Average = styled.div`
 `
 
 export const ImageContainer = styled.div`
-	background: #414345;
-	padding: 1rem;
+	background: ${({ theme }) => theme.accentColor};
+	padding: 2rem;
 	border-radius: 100%;
 
 	img {
+		height: 32px;
 		width: 32px;
 	}
 `
@@ -108,6 +129,8 @@ export const Phrase = styled.p`
 	font-weight: 300;
 	font-size: 1.5rem;
 	line-height: 2rem;
+	user-select: none;
+	color: ${({ theme }) => theme.textColor};
 `
 
 export const TypingField = styled.textarea`
@@ -126,5 +149,11 @@ export const TypingField = styled.textarea`
 	resize: none;
 	text-align: center;
 	overflow: visible;
+	color: ${({ theme }) => theme.textColor};
 	color: ${({ error, theme }) => error && theme.error};
+
+	&[disabled] {
+		color: #69B578;
+		cursor: disabled;
+	}
 `
