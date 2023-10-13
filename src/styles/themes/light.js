@@ -2,8 +2,10 @@ import backArrow from '../../assets/images/icons/backLightArrow.svg';
 import timerArrow from '../../assets/images/icons/lightTimerArrow.svg';
 
 export default {
-	backgroundColor: '#EBEBD3',
-	textColor: '#222',
+	backgroundColor: '#D7D7D9',
+	bgSecondary: '#D7D7D9',
+	accentColor: '#CACACB',
+	textColor: '#352F44',
 	backArrow,
 	timerArrow,
 	error: '#F15152',
