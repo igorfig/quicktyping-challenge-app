@@ -3,50 +3,13 @@ import { Link } from 'react-router-dom'
 
 
 export const Container = styled.main`
-	display: flex;
-	flex-direction: column;
-	
-	max-width: 800px;
-	width: 100%;
 	margin-top: 3rem;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 2rem;
 
-	h2 {
-		font-size: 2rem;
-
-		@media(max-width: 480px) {
-			font-size: 1.2rem;
-		}
-
-		font-weight: bold;
-		align-self: center;
-	}
-
-	ul {
-		margin: 3rem 0;
-		li {
-			font-weight: 400;
-			font-size: 1rem;
-			text-align: justify;
-
-			& + li {
-				margin-top: 1rem;
-			}
-		}
-	}
-
-	p {
-		margin-top: 1rem;
-
-		@media(max-width: 480px) {
-			font-size: .95rem;
-		}
-
-	}
-
-	img {
-		max-width: 480px;
-		margin: 3rem auto;
-	}
 `
 
 export const StartPlay = styled.section`
