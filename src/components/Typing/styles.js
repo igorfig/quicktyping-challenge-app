@@ -138,6 +138,7 @@ export const TypingField = styled.textarea`
 	outline: none;
 	border: none;
 	padding: 1.5rem;
+	margin-bottom: 3rem;
 	font-size: 1.2rem;
 	letter-spacing: .125rem;
 	line-height: 2rem;
@@ -153,7 +154,33 @@ export const TypingField = styled.textarea`
 	color: ${({ error, theme }) => error && theme.error};
 
 	&[disabled] {
-		color: #69B578;
+		color: ${({ success, theme }) => success ? theme.success : theme.error };
 		cursor: disabled;
 	}
+`
+
+export const NextPhraseButton = styled.button`
+	background: transparent;
+	display: inline-flex;
+	align-items: center;
+	gap: .5rem;
+	color: ${({ theme }) => theme.textColor};
+	font-size: 1.2rem;
+	font-weight: 700;
+	position: absolute;
+	right: 30px;
+	bottom: 20px;
+	border: none;
+	outline: none;
+
+	transition: filter .3s;
+
+	&:hover {
+		filter: brightness(.7);
+	}
+`
+
+export const ArrowImg = styled.img`
+	transform: rotate(180deg);
+	width: 32px;	
 `
