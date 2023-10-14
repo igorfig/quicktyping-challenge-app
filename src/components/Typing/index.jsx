@@ -9,17 +9,26 @@ import {
 	Average,
 	ImageContainer,
 	Phrase,
-	TypingField
+	TypingField,
+	NextPhraseButton,
+	ArrowImg
 } from './styles';
 
 import typosMobImg from '../../assets/images/icons/typosMob.svg';
 import accuracyImg from '../../assets/images/icons/accuracy.svg';
 import charPerMinutesImg from '../../assets/images/icons/charPerMinutes.svg';
 import clockImg from '../../assets/images/icons/clock.svg';
+import { useTheme } from '../../hooks/useTheme';
+import themes from '../../styles/themes';
+import phrases from '../../data/phrases';
 
 export default function Typing() {
+	// THEME
+
+	const { theme } = useTheme();
+
 	/* TIMER STATES */
-	const [totalSecondsAmount, setTotalSecondsAmount] = useState(120);
+	const [totalSecondsAmount, setTotalSecondsAmount] = useState(60);
 	const [start, setStart] = useState(false);
 
 	useEffect(() => {
@@ -40,15 +49,49 @@ export default function Typing() {
 
 	/* TYPING STATES*/
 
+	const [difficulty, setDifficulty] = useState('normal');
 	const [typing, setTyping] = useState('');
-	const [phrase, setPhrase] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus accusamus id obcaecati, magni in ipsum praesentium soluta neque nemo suscipit iusto rerum veniam fugit minus voluptate unde. Dolorum aliquid, sint!');
+	const [phrase, setPhrase] = useState(phrases[difficulty][0]);
 	const [hasTypo, setHasTypo] = useState(false);
 	const [typosDetails, setTyposDetails] = useState([])
 	const [lettersTyped, setLettersTyped] = useState(0);
+	const [success, setSuccess] = useState(false);
 
 	const typingInputRef = useRef(null);
 
-	const handleChange = useCallback((event) => {
+	const handleChangeDifficulty = (event) => setDifficulty(event.target.value);
+
+	useEffect(() => {
+		if(difficulty == 'normal' || difficulty === 'hard') {
+			setTotalSecondsAmount(60);
+		} else if (difficulty === 'easy') {
+			setTotalSecondsAmount(30);
+		}
+	}, [start, difficulty]);
+
+	const handleGenerateNewPhrase = useCallback(() => {
+		const randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
+		setPhrase('');
+		setTyping('');
+		setStart(false);
+		setTimeout(() => {
+			setPhrase(phrases[difficulty][randomIndex]);
+		}, 300)
+
+
+	}, [phrases, difficulty]);
+
+	useEffect(() => {
+		const randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
+		setPhrase('');
+		setTyping('');
+		setStart(false)
+		setTimeout(() => {
+			setPhrase(phrases[difficulty][randomIndex]);
+		}, 300)
+	}, [phrases, difficulty])
+
+	const handleChange = (event) => {
 		const typingSplitted = event.target.value.split('');
 	 	const newTyposDetails = [];
 
@@ -60,7 +103,18 @@ export default function Typing() {
 
 		setTyposDetails(newTyposDetails);
   		setTyping(event.target.value);
-	}, [typing, phrase]);
+	}
+
+	const handleFocus = (event) => {
+		setStart(true);
+		typingInputRef.current.placeholder = ''
+	}
+
+	const handleBlur = (event) => {
+		if(start) {
+			typingInputRef.current.placeholder = 'Digite Aqui!';
+		}
+	}
 
 	useEffect(() => {
 		if(typosDetails.length > 0) {
@@ -97,13 +151,20 @@ export default function Typing() {
 
 
 	useEffect(() => {
-		if(start) {
+		if(start && phrase) {
 			if(typosDetails.length === 0 && typing.length === phrase.length){ 
 				setStart(false)
+				setSuccess(true);
 				typingInputRef.current.disabled = true;
 			};
+
+			if(totalSecondsAmount === 0) {
+				setStart(false)
+				setSuccess(false);
+				typingInputRef.current.disabled = true;
+			}
 		}
-	}, [typosDetails, typing, phrase])
+	}, [typosDetails, typing, phrase, totalSecondsAmount])
 
 	return (
 		<Container>
@@ -114,8 +175,8 @@ export default function Typing() {
 			</Dots>
 
 			<Options>
-				<select name="difficulty" id="difficulty">
-					<option value="Normal">Normal</option>
+				<select name="difficulty" id="difficulty" value={difficulty} onChange={handleChangeDifficulty}>
+					<option value="normal">Normal</option>
 					<option value="easy">Fácil</option>
 					<option value="hard">Díficil</option>
 				</select>
@@ -175,23 +236,31 @@ export default function Typing() {
 					<TypingField
 						ref={typingInputRef}
 						error={hasTypo ? 1 : 0}
+						success={success}
 						onChange={handleChange}
+						onFocus={handleFocus}
+						onBlur={handleBlur}
 						value={typing}
-						onFocus={() => setStart(true)}
-						placeholder="CLIQUE PARA INICIAR..."/>
+						placeholder="CLIQUE PARA INICIAR...
+						"/>
 				</>
 			) : (
 				<ThreeDots 
 					height="80" 
 					width="80" 
 					radius="9"
-					color="#ffffffde" 
+					color={themes[theme].textColor} 
 					ariaLabel="three-dots-loading"
 					wrapperStyle={{}}
 					wrapperClassName=""
 					visible={true}
 				 />
 			)}
+
+			<NextPhraseButton onClick={handleGenerateNewPhrase}>
+				Próxima frase
+				<ArrowImg src={themes[theme].arrow} alt="Seta"/>
+			</NextPhraseButton>
 			
 		</Container>
 	)
