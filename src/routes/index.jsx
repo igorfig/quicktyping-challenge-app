@@ -8,7 +8,6 @@ import { ThemeContextProvider } from '../contexts/ThemeContext';
 
 import Header from '../components/Header';
 import Home from '../pages/Home';
-import GameWindow from '../pages/GameWindow';
 
 export default function AppRoutes({ setCurrentTheme }) {
 	return (
@@ -17,7 +16,6 @@ export default function AppRoutes({ setCurrentTheme }) {
 				<Header setCurrentTheme={setCurrentTheme} />
 				<Routes>
 					<Route exact path="/" element={<Home />} />
-					<Route exact path="/jogo" element={<GameWindow />} />
 				</Routes>
 			</ThemeContextProvider>
 		</Router>
