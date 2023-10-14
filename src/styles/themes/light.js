@@ -1,4 +1,4 @@
-import backArrow from '../../assets/images/icons/backLightArrow.svg';
+import arrow from '../../assets/images/icons/lightArrow.svg';
 import timerArrow from '../../assets/images/icons/lightTimerArrow.svg';
 
 export default {
@@ -6,9 +6,10 @@ export default {
 	bgSecondary: '#D7D7D9',
 	accentColor: '#CACACB',
 	textColor: '#352F44',
-	backArrow,
+	arrow,
 	timerArrow,
 	error: '#F15152',
+	success: '#69B578',
 	blur: `
 		background: #00000010;
 		backdrop-filter: blur(12px);
