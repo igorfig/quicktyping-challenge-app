@@ -144,7 +144,6 @@ export const TypingField = styled.textarea`
 	line-height: 2rem;
 	width: 80%;
 	min-height: 200px;
-	max-height: 100%;
 	word-wrap: break-word;
 	word-break: break-word;
 	resize: none;
@@ -155,7 +154,7 @@ export const TypingField = styled.textarea`
 
 	&[disabled] {
 		color: ${({ success, theme }) => success ? theme.success : theme.error };
-		cursor: disabled;
+		cursor: not-allowed;
 	}
 `
 
