@@ -6,7 +6,7 @@ export function ThemeContextProvider({ children }) {
 	const [theme, setTheme] = useState(() => {
 		const selectedTheme = JSON.parse(localStorage.getItem('@theme'));
 
-		return selectedTheme || 'dark';
+		return selectedTheme || 'light';
 	});
 
 	const handleToggleTheme = () => setTheme(prevState => prevState === 'dark' ? 'light' : 'dark');
