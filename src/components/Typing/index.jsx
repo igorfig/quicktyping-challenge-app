@@ -73,6 +73,9 @@ export default function Typing() {
 		const randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
 		setPhrase('');
 		setTyping('');
+		setHasTypo(false);
+		setTyposDetails([]);
+		setLettersTyped(0);
 		setStart(false);
 		setTimeout(() => {
 			setPhrase(phrases[difficulty][randomIndex]);
@@ -82,13 +85,7 @@ export default function Typing() {
 	}, [phrases, difficulty]);
 
 	useEffect(() => {
-		const randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
-		setPhrase('');
-		setTyping('');
-		setStart(false)
-		setTimeout(() => {
-			setPhrase(phrases[difficulty][randomIndex]);
-		}, 300)
+		handleGenerateNewPhrase();
 	}, [phrases, difficulty])
 
 	const handleChange = (event) => {
