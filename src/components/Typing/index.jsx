@@ -62,27 +62,39 @@ export default function Typing() {
 	const handleChangeDifficulty = (event) => setDifficulty(event.target.value);
 
 	useEffect(() => {
-		if(difficulty == 'normal' || difficulty === 'hard') {
-			setTotalSecondsAmount(60);
+		if(difficulty === 'hard') {
+			setTotalSecondsAmount(90)
+		} else if(difficulty == 'normal') {
+			setTotalSecondsAmount(120);
 		} else if (difficulty === 'easy') {
-			setTotalSecondsAmount(30);
+			setTotalSecondsAmount(60);
 		}
 	}, [start, difficulty]);
 
 	const handleGenerateNewPhrase = useCallback(() => {
-		const randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
-		setPhrase('');
-		setTyping('');
-		setHasTypo(false);
-		setTyposDetails([]);
-		setLettersTyped(0);
-		setStart(false);
-		setTimeout(() => {
-			setPhrase(phrases[difficulty][randomIndex]);
-		}, 300)
+ 	 const getRandomUniqueIndex = () => {
+	    let randomIndex;
+	    do {
+	      randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
+	    } while (randomIndex === lastRandomIndex);
+	    lastRandomIndex = randomIndex;
+	    return randomIndex;
+	  };
 
+  	const randomIndex = getRandomUniqueIndex();
 
+	  setPhrase('');
+	  setTyping('');
+	  setHasTypo(false);
+	  setTyposDetails([]);
+	  setLettersTyped(0);
+	  setStart(false);
+	  setTimeout(() => {
+	    setPhrase(phrases[difficulty][randomIndex]);
+	  }, 300);
 	}, [phrases, difficulty]);
+
+	let lastRandomIndex = -1;
 
 	useEffect(() => {
 		handleGenerateNewPhrase();
