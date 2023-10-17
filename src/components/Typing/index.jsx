@@ -29,6 +29,7 @@ export default function Typing() {
 
 	/* TIMER STATES */
 	const [totalSecondsAmount, setTotalSecondsAmount] = useState(60);
+	const initialSecondsReference = useRef(60);
 	const [start, setStart] = useState(false);
 
 	useEffect(() => {
@@ -57,19 +58,22 @@ export default function Typing() {
 	const [lettersTyped, setLettersTyped] = useState(0);
 	const [success, setSuccess] = useState(false);
 
-	const typingInputRef = useRef(null);
+	const typingTextAreaRef = useRef(null);
 
 	const handleChangeDifficulty = (event) => setDifficulty(event.target.value);
 
 	useEffect(() => {
 		if(difficulty === 'hard') {
 			setTotalSecondsAmount(90)
+			initialSecondsReference.current = 90;
 		} else if(difficulty == 'normal') {
 			setTotalSecondsAmount(120);
+			initialSecondsReference.current = 120;
 		} else if (difficulty === 'easy') {
 			setTotalSecondsAmount(60);
+			initialSecondsReference.current = 60;
 		}
-	}, [start, difficulty]);
+	}, [difficulty]);
 
 	const handleGenerateNewPhrase = useCallback(() => {
  	 const getRandomUniqueIndex = () => {
@@ -77,8 +81,8 @@ export default function Typing() {
 	    do {
 	      randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
 	    } while (randomIndex === lastRandomIndex);
-	    lastRandomIndex = randomIndex;
-	    return randomIndex;
+	    	lastRandomIndex = randomIndex;
+	    	return randomIndex;
 	  };
 
   	const randomIndex = getRandomUniqueIndex();
@@ -100,6 +104,12 @@ export default function Typing() {
 		handleGenerateNewPhrase();
 	}, [phrases, difficulty])
 
+	const autoResize = (event) => {
+	   	const textarea = typingTextAreaRef.current;
+    	textarea.style.height = 'auto';
+    	textarea.style.height = `${textarea.scrollHeight}px`;
+	}
+
 	const handleChange = (event) => {
 		const typingSplitted = event.target.value.split('');
 	 	const newTyposDetails = [];
@@ -112,16 +122,17 @@ export default function Typing() {
 
 		setTyposDetails(newTyposDetails);
   		setTyping(event.target.value);
+  		autoResize();
 	}
 
 	const handleFocus = (event) => {
 		setStart(true);
-		typingInputRef.current.placeholder = ''
+		typingTextAreaRef.current.placeholder = ''
 	}
 
 	const handleBlur = (event) => {
 		if(start) {
-			typingInputRef.current.placeholder = 'Digite Aqui!';
+			typingTextAreaRef.current.placeholder = 'Digite Aqui!';
 		}
 	}
 
@@ -152,11 +163,18 @@ export default function Typing() {
 				setLettersTyped(prevState => prevState + 1);
 			}
 
-			window.addEventListener('keypress', letterTypedHandler);
+			typingTextAreaRef.current.addEventListener('keypress', letterTypedHandler);
 
-			return () => window.removeEventListener('keypress', letterTypedHandler);
+			return () => typingTextAreaRef.current?.removeEventListener('keypress', letterTypedHandler);
 		}
 	}, [start])
+
+
+	const charPerMinutes = useMemo(() => {
+		 const divisor = initialSecondsReference.current - totalSecondsAmount;
+		return divisor === 0 ? 0 : Math.round((lettersTyped / divisor) * 60);;
+
+	}, [lettersTyped, initialSecondsReference.current, totalSecondsAmount])
 
 
 	useEffect(() => {
@@ -164,13 +182,13 @@ export default function Typing() {
 			if(typosDetails.length === 0 && typing.length === phrase.length){ 
 				setStart(false)
 				setSuccess(true);
-				typingInputRef.current.disabled = true;
+				typingTextAreaRef.current.disabled = true;
 			};
 
 			if(totalSecondsAmount === 0) {
 				setStart(false)
 				setSuccess(false);
-				typingInputRef.current.disabled = true;
+				typingTextAreaRef.current.disabled = true;
 			}
 		}
 	}, [typosDetails, typing, phrase, totalSecondsAmount])
@@ -210,7 +228,7 @@ export default function Typing() {
 							<img src={charPerMinutesImg} alt="Caracteres por minuto" />
 						</ImageContainer>
 						<div>
-							<span>{Math.round((lettersTyped / (120 - totalSecondsAmount)) * 60) || 0}</span>
+							<span>{charPerMinutes}</span>
 							<small>caract/min</small>
 						</div>
 				</Average>
@@ -243,15 +261,15 @@ export default function Typing() {
 					</Phrase>
 
 					<TypingField
-						ref={typingInputRef}
+						ref={typingTextAreaRef}
 						error={hasTypo ? 1 : 0}
-						success={success}
+						success={success ? 1 : 0}
 						onChange={handleChange}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						value={typing}
-						placeholder="CLIQUE PARA INICIAR...
-						"/>
+						placeholder="CLIQUE PARA INICIAR..."
+						/>
 				</>
 			) : (
 				<ThreeDots 
