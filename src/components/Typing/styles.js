@@ -143,12 +143,11 @@ export const TypingField = styled.textarea`
 	letter-spacing: .125rem;
 	line-height: 2rem;
 	width: 80%;
-	min-height: 200px;
 	word-wrap: break-word;
 	word-break: break-word;
 	resize: none;
 	text-align: center;
-	overflow: visible;
+	overflow: hidden;
 	color: ${({ theme }) => theme.textColor};
 	color: ${({ error, theme }) => error && theme.error};
 
