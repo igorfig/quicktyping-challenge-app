@@ -41,7 +41,7 @@ export default function Home() {
 				</Description>
 			</Section>	
 
-			<TypingLink to="#">
+			<TypingLink to="/typing">
 				<img src={themes[theme].rocket} alt="" />
 				COMEÇAR A PRATICAR
 			</TypingLink>
@@ -90,7 +90,7 @@ export default function Home() {
 
 				<StartLearn>
 					<ButtonContainer>
-						<TypingLink>
+						<TypingLink to="/typing">
 							<img src={themes[theme].rocket} alt="" />
 							QUERO APRENDER!
 						</TypingLink>
