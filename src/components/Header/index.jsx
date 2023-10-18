@@ -10,7 +10,6 @@ import {
 } from './styles';
 import { useTheme } from '../../hooks/useTheme';
 import themes from '../../styles/themes';
-import typingIllustrationImg from '../../assets/images/illustrations/typing.svg';
 
 export default function Header({ setCurrentTheme }) {
 	const { theme, handleToggleTheme } = useTheme(); 
@@ -38,7 +37,7 @@ export default function Header({ setCurrentTheme }) {
 				</Description>
 			</TitleContainer>
 
-			<Image src={typingIllustrationImg} href="illustration"/>
+			<Image src={themes[theme].typingIllustration} href="illustration"/>
 		</Container>
 	)
 }

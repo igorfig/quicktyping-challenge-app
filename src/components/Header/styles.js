@@ -34,12 +34,13 @@ export const TitleContainer = styled.div`
 `
 
 export const Title = styled.h1`
+	color: ${({theme}) => theme.accentColor};
 	font-size: 3.8rem;
-		@media(max-width: 480px) {
-			font-size: 3rem;
-		}
-		padding: 1rem 0;
-		margin-bottom: 3rem;
+	@media(max-width: 480px) {
+		font-size: 3rem;
+	}
+	padding: 1rem 0;
+	margin-bottom: 3rem;
 `
 
 export const Description = styled.p`
