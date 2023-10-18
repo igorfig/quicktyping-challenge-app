@@ -14,10 +14,6 @@ import {
 	ArrowImg
 } from './styles';
 
-import typosMobImg from '../../assets/images/icons/typosMob.svg';
-import accuracyImg from '../../assets/images/icons/accuracy.svg';
-import charPerMinutesImg from '../../assets/images/icons/charPerMinutes.svg';
-import clockImg from '../../assets/images/icons/clock.svg';
 import { useTheme } from '../../hooks/useTheme';
 import themes from '../../styles/themes';
 import phrases from '../../data/phrases';
@@ -57,6 +53,7 @@ export default function Typing() {
 	const [typosDetails, setTyposDetails] = useState([])
 	const [lettersTyped, setLettersTyped] = useState(0);
 	const [success, setSuccess] = useState(false);
+	const phraseIndex = useRef(0);
 
 	const typingTextAreaRef = useRef(null);
 
@@ -76,29 +73,22 @@ export default function Typing() {
 	}, [difficulty]);
 
 	const handleGenerateNewPhrase = useCallback(() => {
- 	 const getRandomUniqueIndex = () => {
-	    let randomIndex;
-	    do {
-	      randomIndex = Math.floor(Math.random() * phrases[difficulty].length);
-	    } while (randomIndex === lastRandomIndex);
-	    	lastRandomIndex = randomIndex;
-	    	return randomIndex;
-	  };
-
-  	const randomIndex = getRandomUniqueIndex();
-
+		if(phraseIndex.current < phrases[difficulty].length - 1){
+			phraseIndex.current++;
+		} else if(phraseIndex.current === phrases[difficulty].length - 1) {
+			phraseIndex.current = 0;
+		};
 	  setPhrase('');
 	  setTyping('');
 	  setHasTypo(false);
 	  setTyposDetails([]);
 	  setLettersTyped(0);
 	  setStart(false);
+	  setTotalSecondsAmount(initialSecondsReference.current);
 	  setTimeout(() => {
-	    setPhrase(phrases[difficulty][randomIndex]);
+	    setPhrase(phrases[difficulty][phraseIndex.current]);
 	  }, 300);
 	}, [phrases, difficulty]);
-
-	let lastRandomIndex = -1;
 
 	useEffect(() => {
 		handleGenerateNewPhrase();
@@ -212,7 +202,7 @@ export default function Typing() {
 			<AverageContainer>
 				<Average>
 							<ImageContainer>
-								<img src={clockImg} alt="Cronômetro" />
+								<img src={themes[theme].clockImg} alt="Cronômetro" />
 							</ImageContainer>
 							<div>
 								<span>
@@ -225,7 +215,7 @@ export default function Typing() {
 
 				<Average>
 						<ImageContainer>
-							<img src={charPerMinutesImg} alt="Caracteres por minuto" />
+							<img src={themes[theme].charPerMinutesImg} alt="Caracteres por minuto" />
 						</ImageContainer>
 						<div>
 							<span>{charPerMinutes}</span>
@@ -235,7 +225,7 @@ export default function Typing() {
 
 				<Average>
 					<ImageContainer>
-						<img src={accuracyImg} alt="Precisão de acertos" />
+						<img src={themes[theme].accuracyImg} alt="Precisão de acertos" />
 					</ImageContainer>
 					<div>
 						<span>{typingAccuracy.toFixed(1)} %</span>
@@ -245,7 +235,7 @@ export default function Typing() {
 		
 				<Average>
 					<ImageContainer>
-						<img src={typosMobImg} alt="Erros de digitação" />
+						<img src={themes[theme].typosMobImg} alt="Erros de digitação" />
 					</ImageContainer>
 					<div>
 						<span>{typosDetails?.length}</span>
