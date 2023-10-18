@@ -113,7 +113,7 @@ export const Average = styled.div`
 `
 
 export const ImageContainer = styled.div`
-	background: ${({ theme }) => theme.accentColor};
+	${({ theme }) => theme.blur};
 	padding: 2rem;
 	border-radius: 100%;
 

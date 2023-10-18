@@ -27,9 +27,6 @@ export default createGlobalStyle`
 	  color: #646cff;
 	  text-decoration: inherit;
 	}
-	a:hover {
-	  color: #535bf2;
-	}
 
 	body {
 	  min-width: 320px;
