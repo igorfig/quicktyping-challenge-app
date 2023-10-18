@@ -57,13 +57,14 @@ export const Image = styled.img`
 
 export const HomepageLink = styled(Link)`
 	position: absolute;
-	left: 10px;
-	top: 10px;
+	left: 30px;
+	top: 15px;
 	width: 48px;
 	padding: 0;
 	
 	img {
 		width: 48px;
 	}
+	
 
 `

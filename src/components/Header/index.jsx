@@ -23,10 +23,16 @@ export default function Header({ setCurrentTheme }) {
 		setCurrentTheme(currentTheme);
 	}, [currentTheme]);
 
-	console.log(location.pathname);
 
 	return(
 		<Container>
+			{
+				location.pathname === '/typing' && (
+					<HomepageLink to="/">
+						<img src={themes[theme].arrow} alt="Voltar"/>
+					</HomepageLink>
+				)
+			}
 			<button onClick={handleToggleTheme}>{theme === 'dark' ? '🌞' : '🌚'}</button>
 			<TitleContainer>
 				<Title>QuickTyping <span>Challenge</span></Title>			
