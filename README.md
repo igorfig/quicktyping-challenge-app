@@ -1,8 +1,9 @@
-# React + Vite
+# QuickTyping Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p>
+	Domine a arte da digitação rápida e precisa com o QuickTyping Challenge, a sua ferramenta de treinamento de digitação definitiva. Seja você um iniciante buscando aprimorar suas habilidades ou um digitador experiente em busca de desafios.
+</p>
+	
+<br>
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<a href="https://quicktypingchallenge.vercel.app">Você pode acessar o site por aqui.</a>
